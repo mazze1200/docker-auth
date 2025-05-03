@@ -28,7 +28,11 @@ services:
       - LLDAP_LDAP_BASE_DN=dc=mazze,dc=org
     networks:
       http: {}
-
+  whoami:
+    image: traefik/whoami
+    container_name: whoami
+    networks:
+      http: {}
   # letsencrypt:
   #   image: certbot/certbot:v3.3.0
   #   volumes:
@@ -104,4 +108,6 @@ services:
   #   networks:
   #     etcd: {}
 networks:
-  http: {}
+  http: 
+    name: http
+    external: true
