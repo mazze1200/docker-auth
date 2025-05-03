@@ -2,3 +2,5 @@ letsencrypt/
 nginx/log/
 lldap/
 
+wireguard/
+nginx/etc/wireguard/
