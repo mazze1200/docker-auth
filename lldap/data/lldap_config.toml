@@ -13,7 +13,7 @@
 ## change it to "127.0.0.1" ("::1" in case of IPv6).
 ## If LLDAP server is running in docker, set it to "0.0.0.0" ("::" for IPv6) to allow connections
 ## originating from outside the container.
-#ldap_host = "0.0.0.0"
+ldap_host = "0.0.0.0"
 
 ## The port on which to have the LDAP server.
 #ldap_port = 3890
@@ -24,7 +24,7 @@
 ## change it to "127.0.0.1" ("::1" in case of IPv6).
 ## If LLDAP server is running in docker, set it to "0.0.0.0" ("::" for IPv6) to allow connections
 ## originating from outside the container.
-#http_host = "0.0.0.0"
+http_host = "0.0.0.0"
 
 ## The port on which to have the HTTP server, for user login and
 ## administration.
@@ -115,7 +115,7 @@ database_url = "sqlite:///data/users.db?mode=rwc"
 ## This can be any random string, the recommendation is that it's at least 12
 ## characters long.
 ## Env variable: LLDAP_KEY_SEED
-key_seed = "RanD0m STR1ng"
+#key_seed = "RanD0m STR1ng"
 
 ## Ignored attributes.
 ## Some services will request attributes that are not present in LLDAP. When it
