@@ -9,4 +9,4 @@ docker run \
     -v "${SCRIPT_DIR}/letsencrypt/conf/:/etc/letsencrypt/:rw" \
     -v "${SCRIPT_DIR}/letsencrypt/log/:/var/log/letsencrypt/:rw" \
     ${CERTBOT_IMAGE} certonly --webroot --webroot-path /var/www/certbot/ \
-    -d mazze.org -d lldap.mazze.org -d whoami.mazze.org
+    -d mazze.org -d auth.mazze.org -d lldap.mazze.org -d whoami.mazze.org
