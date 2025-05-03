@@ -1,8 +1,8 @@
 version: '3.9'
 services:
   nginx:
-    container_name: nginx
-    image: nginx:1.27-bookworm 
+    image: nginx:1.27-bookworm
+    container_name: nginx 
     environment:
       - TZ=Europe/Berlin
     # restart: always
@@ -31,6 +31,13 @@ services:
   whoami:
     image: traefik/whoami
     container_name: whoami
+    networks:
+      http: {}
+  authelia:
+    image: authelia/authelia:4.39
+    container_name: authelia
+    environment:
+      - TZ=Europe/Berlin
     networks:
       http: {}
   # letsencrypt:
