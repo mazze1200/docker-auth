@@ -20,7 +20,7 @@ PrivateKey = $(cat wireguard/server.key)
 
 [Peer]
 PublicKey = $(cat wireguard/home.pub)
-AllowedIPs = 192.168.17.2/24
+AllowedIPs = ${HOME_NETWORK}.0/24
 " > nginx/etc/wireguard/home.conf
 
 
@@ -31,5 +31,6 @@ Address = 192.168.17.2/24
 [Peer]
 PublicKey = $(cat wireguard/server.pub)
 Endpoint = ${SERVER_ADDRESS}:${PORT}
+AllowedIPs = 192.168.17.0/24
 PersistentKeepalive = 25
 " > wireguard/home_wg0.conf
