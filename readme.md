@@ -4,7 +4,7 @@
 First you need to update the domain in 
 - letsencrypt_configure.sh
 - nginx/etc/nginx/sites-available/default.conf
-- docker-compose.yaml: LLDAP_LDAP_BASE_DN
+
 
 ## Create local docker network
 ```code
