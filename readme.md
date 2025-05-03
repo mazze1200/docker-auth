@@ -18,6 +18,11 @@ For this you need to have wireguard-tools installed
 $ create_wireguard.sh 
 ```
 
+You can find the WG config for your home router here
+```code
+wireguard/home_wg0.conf 
+```
+
 ## Create passwords and secrets for Authelia and LLDAP
 
 ```code
