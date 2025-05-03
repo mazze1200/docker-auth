@@ -26,15 +26,8 @@ services:
     environment:
       - TZ=Europe/Berlin
       - LLDAP_LDAP_BASE_DN=dc=mazze,dc=org
-      - LLDAP_JWT_SECRET_FILE=/run/secrets/LLDAP_JWT_SECRET
-      - LLDAP_KEY_FILE=/run/secrets/LLDAP_KEY
-      - LLDAP_LDAP_USER_PASS_FILE=/run/secrets/LLDAP_LDAP_USER_PASS
     networks:
       http: {}
-    secrets:
-       - LLDAP_JWT_SECRET
-       - LLDAP_KEY
-       - LLDAP_LDAP_USER_PASS
 
   # letsencrypt:
   #   image: certbot/certbot:v3.3.0
