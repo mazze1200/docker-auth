@@ -2,24 +2,39 @@
 set -e
 echo "Generating passwords. Please store them securely"
 
-LLDAP_JWT_SECRET=$(openssl rand -base64 32 | tr -dc 'a-zA-Z0-9')
-#printf "$LLDAP_JWT_SECRET" | docker secret create LLDAP_JWT_SECRET -
+## LLDAP
+LLDAP_JWT_SECRET=$(openssl rand -base64 32)
+printf "$LLDAP_JWT_SECRET" | docker secret create LLDAP_JWT_SECRET -
 
-LLDAP_KEY_SEED=$(openssl rand -base64 32 | tr -dc 'a-zA-Z0-9')
-#printf "$LLDAP_KEY_SEED" | docker secret create LLDAP_KEY_SEED -
+LLDAP_KEY_SEED=$(openssl rand -base64 32)
+printf "$LLDAP_KEY_SEED" | docker secret create LLDAP_KEY_SEED -
 
-LLDAP_LDAP_USER_PASS=$(openssl rand -base64 32 | tr -dc 'a-zA-Z0-9')
-#printf "$LLDAP_LDAP_USER_PASS" | docker secret create LLDAP_LDAP_USER_PASS -
-
-sed -i -e 's/"LLDAP_JWT_SECRET"/"'"${LLDAP_JWT_SECRET}"'"/g' \
-    -e 's/"LLDAP_KEY_SEED"/"'"${LLDAP_KEY_SEED}"'"/g' \
-    -e 's/"LLDAP_LDAP_USER_PASS"/"'"${LLDAP_LDAP_USER_PASS}"'"/g' \
-    lldap/data/lldap_config.toml
-
+LLDAP_LDAP_USER_PASS=$(openssl rand -base64 32)
+printf "$LLDAP_LDAP_USER_PASS" | docker secret create LLDAP_LDAP_USER_PASS -
 
 echo LLDAP_JWT_SECRET: $LLDAP_JWT_SECRET
 echo LLDAP_KEY_SEED: $LLDAP_KEY_SEED
 echo LLDAP_LDAP_USER_PASS: $LLDAP_LDAP_USER_PASS
+
+
+## Authelia
+AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET=$(openssl rand -base64 32)
+printf "$AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET" | docker secret create AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET -
+
+AUTHELIA_SESSION_SECRET=$(openssl rand -base64 32)
+printf "$AUTHELIA_SESSION_SECRET" | docker secret create AUTHELIA_SESSION_SECRET -
+
+AUTHELIA_STORAGE_POSTGRES_PASSWORD=$(openssl rand -base64 32)
+printf "$AUTHELIA_STORAGE_POSTGRES_PASSWORD" | docker secret create AUTHELIA_STORAGE_POSTGRES_PASSWORD -
+
+AUTHELIA_STORAGE_ENCRYPTION_KEY=$(openssl rand -base64 32)
+printf "$AUTHELIA_STORAGE_ENCRYPTION_KEY" | docker secret create AUTHELIA_STORAGE_ENCRYPTION_KEY -
+
+echo AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET: $AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET
+echo AUTHELIA_SESSION_SECRET: $AUTHELIA_SESSION_SECRET
+echo AUTHELIA_STORAGE_POSTGRES_PASSWORD: $AUTHELIA_STORAGE_POSTGRES_PASSWORD
+echo AUTHELIA_STORAGE_ENCRYPTION_KEY: $AUTHELIA_STORAGE_ENCRYPTION_KEY
+
 
 echo finished.
 

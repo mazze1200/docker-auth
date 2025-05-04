@@ -27,27 +27,43 @@ services:
     sysctls:
       - net.ipv4.ip_forward=1
       - net.ipv4.conf.all.src_valid_mark=1
-  # lldap:
-  #   image: lldap/lldap:stable
-  #   container_name: lldap
-  #   #ports:
-  #     ## We do not map ports because we set lldap behind the nginx in a private network
-  #   volumes:
-  #     - "./lldap/data:/data"
-  #   environment:
-  #     - TZ=Europe/Berlin
-  #     - LLDAP_LDAP_BASE_DN=dc=mazze,dc=org
-  #   networks:
-  #     http: {}
-  # authelia:
-  #   image: authelia/authelia:4.39
-  #   container_name: authelia
-  #   volumes:
-  #   - ./authelia/configuration.yml:/config/configuration.yml:ro
-  #   environment:
-  #     - TZ=Europe/Berlin
-  #   networks:
-  #     http: {}
+  lldap:
+    image: lldap/lldap:stable
+    container_name: lldap
+    #ports:
+      ## We do not map ports because we set lldap behind the nginx in a private network
+    volumes:
+      - "./lldap/data:/data"
+    environment:
+      - TZ=Europe/Berlin
+      - LLDAP_LDAP_BASE_DN=dc=mazze,dc=org
+      - LLDAP_JWT_SECRET_FILE=/run/secrets/LLDAP_JWT_SECRET
+      - LLDAP_KEY_SEED_FILE=/run/secrets/LLDAP_KEY_SEED
+      - LLDAP_LDAP_USER_PASS_FILE=/run/secrets/LLDAP_LDAP_USER_PASS
+    secrets:
+       - LLDAP_JWT_SECRET
+       - LLDAP_KEY_SEED
+       - LLDAP_LDAP_USER_PASS
+    networks:
+      http: {}
+  authelia:
+    image: authelia/authelia:4.39
+    container_name: authelia
+    volumes:
+    - ./authelia/configuration.yml:/config/configuration.yml:ro
+    environment:
+      - TZ=Europe/Berlin
+      - AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET_FILE=/run/secrets/AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET
+      - AUTHELIA_SESSION_SECRET_FILE=/run/secrets/AUTHELIA_SESSION_SECRET
+      - AUTHELIA_STORAGE_POSTGRES_PASSWORD_FILE=/run/secrets/AUTHELIA_STORAGE_POSTGRES_PASSWORD
+      - AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE=/run/secrets/AUTHELIA_STORAGE_ENCRYPTION_KEY
+    secrets:
+       - AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET
+       - AUTHELIA_SESSION_SECRET
+       - AUTHELIA_STORAGE_POSTGRES_PASSWORD
+       - AUTHELIA_STORAGE_ENCRYPTION_KEY
+    networks:
+      http: {}
   whoami:
     image: traefik/whoami
     container_name: whoami
@@ -63,4 +79,19 @@ services:
 networks:
   http: 
     name: http
+    external: true
+secrets:                        
+  AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET:
+    external: true                        
+  AUTHELIA_SESSION_SECRET:
+    external: true                        
+  AUTHELIA_STORAGE_POSTGRES_PASSWORD:
+    external: true                        
+  AUTHELIA_STORAGE_ENCRYPTION_KEY:
+    external: true                        
+  LLDAP_JWT_SECRET:
+    external: true                        
+  LLDAP_KEY_SEED:
+    external: true                        
+  LLDAP_LDAP_USER_PASS:
     external: true
